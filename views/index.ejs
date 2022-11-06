@@ -1,0 +1,59 @@
+<%- include('partials/header'); -%>
+
+<div class="container">
+  <p>Welcome to <%= title %></p>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-8">
+      <ul>
+        <% data.forEach(function(product) { %>
+           <li> product_name: <%= product.product_name %> Price: <%= product.price %> USD</li>
+        <% }); %> 
+      </ul>
+    </div>
+    <div class="col-4">
+      <div id="carouselSearchResult" class="carousel carousel-dark slide" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+          <% data.forEach(function(product, index) { %>
+            <% if (index == 0) {
+              var active = " class=active aria-current=true";
+            } else {
+              var active = "";
+            } %>
+            <button type="button" data-bs-target="#carouselSearchResult" data-bs-slide-to="<%= index %>" <%= active %> aria-label="<%= product.product_id %>"></button>
+          <% }); %>
+        </div>
+        <div class="carousel-inner">
+          <% data.forEach(function(product, index) { %>
+            <% if (index == 0) {
+              var active = " active";
+            } else {
+              var active = "";
+            } %>
+          <div class="carousel-item <%= active %>">
+            <img src="<%= product.image.link %>" class="d-block w-100" alt="<%= product.image.alt %>">
+            <div class="carousel-caption d-none d-md-block">
+              <h5><%= product.product_name %></h5>
+              <p><%= product.price %> USD - <a href="<%= product.link %>" target="_blank">Details ...</a></p>
+            </div>
+          </div>
+          <% }); %>  
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselSearchResult" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselSearchResult" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+<%- include('partials/footer'); -%>
