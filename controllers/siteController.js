@@ -1,3 +1,4 @@
+const Category = require('../models/categoryModel');
 const Product = require('../models/productModel');
 
 const site_index = (req, res) => {
