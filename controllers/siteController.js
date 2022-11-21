@@ -1,24 +1,29 @@
-const Category = require('../models/categoryModel');
-const Product = require('../models/productModel');
+const ocapiSDK = require('../scripts/ocapiSdk');
+const productBuilder = require('../scripts/modelsBuilder/productTileBuilder')
 
 const site_index = (req, res) => {
-  console.log('controller run');
+    console.log('controller run');
 
-  let q = 'dress';
-  let count = 5;
+    const q = 'dress';
 
-  Product.productSearch(q,count)
-    .then(result => {
-      console.log(result);
-      res.render('index', { 
-        title: 'Express'+' ['+q+']',
-        data: result
-      });
-    })
-    .catch(err => {
-      console.log(err);
-    });
-    
+    ocapiSDK.getProductSearchResult(q)
+        .then(searchResult => {
+            const productArr = productBuilder.getProductsArr(searchResult);
+
+            //console.log(productArr);
+            res.render('index', {
+                title: 'Express' + ' [' + q + ']',
+                data: productArr
+            });
+        })
+        .catch(function (err) {
+            console.log(err)
+
+            res.render('index', {
+                title: 'Express' + ' [' + q + ']',
+                data: productArr
+            });
+        })
 }
 
 module.exports = {
