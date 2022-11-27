@@ -47,5 +47,15 @@ module.exports = {
         };
 
         return addQueryParamToUrl(baseProductSearchUrl, requestQueryParam);
+    },
+    getCategoriesUrl: function (queryParam = {}) {
+        const shopApiBase = getShopApiBase();
+        const baseProductSearchUrl = `${shopApiBase}/categories/root`;
+        const requestQueryParam = {
+            ...queryParam,
+            client_id: CLIENT_ID
+        };
+
+        return addQueryParamToUrl(baseProductSearchUrl, requestQueryParam);
     }
 };

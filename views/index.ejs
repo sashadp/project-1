@@ -5,18 +5,50 @@
 </div>
 
 <div class="container">
-  <div class="row">
+  
+  <div class="row mb-3">
+    <div class="col-12">
+      <% if (typeof categoryData !== 'undefined') { %>
+        <div class="card">
+          <div class="card-body">
+            <ul>
+              <% categoryData.forEach(function(category) { %>
+                <li> category_name: <%= category.name %> [id=<%= category.id %>] [parent_id=<%= category.parent_category_id %>]</li>
+              <% }); %>
+            </ul>
+          </div>
+        </div>
+      <% } else { %>
+        <div class="card">
+          <div class="card-body">
+            No Category Data
+          </div>
+        </div>
+      <% }%>
+    </div>
+  </div>
+
+  <div class="row mb-3">
     <div class="col-8">
+      <% if (typeof productData !== 'undefined') { %>
       <ul>
-        <% data.forEach(function(product) { %>
-           <li> product_name: <%= product.product_name %> Price: <%= product.price %> USD</li>
-        <% }); %> 
+        <% productData.forEach(function(product) { %>
+          <li> product_name: <%= product.product_name %> Price: <%= product.price %> USD</li>
+        <% }); %>
       </ul>
+      <% } else { %>
+        <div class="card">
+          <div class="card-body">
+            No Product Data
+          </div>
+        </div>
+      <% } %>
     </div>
     <div class="col-4">
+      <% if (typeof productData !== 'undefined') { %>
       <div id="carouselSearchResult" class="carousel carousel-dark slide" data-bs-ride="carousel">
         <div class="carousel-indicators">
-          <% data.forEach(function(product, index) { %>
+          <% productData.forEach(function(product, index) { %>
             <% if (index == 0) {
               var active = " class=active aria-current=true";
             } else {
@@ -26,7 +58,7 @@
           <% }); %>
         </div>
         <div class="carousel-inner">
-          <% data.forEach(function(product, index) { %>
+          <% productData.forEach(function(product, index) { %>
             <% if (index == 0) {
               var active = " active";
             } else {
@@ -50,10 +82,42 @@
           <span class="visually-hidden">Next</span>
         </button>
       </div>
+      <% } else { %>
+        <div class="card">
+          <div class="card-body">
+            Empty Carousel
+          </div>
+        </div>
+      <% } %>
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Try Ajax</h5>
+          <div class="card-text" id="product-search-container">data should be here</div>
+        </div>
+      </div>
     </div>
   </div>
 
 </div>
 
+<script>
+  $(document).ready(function() {
+    console.log( "document ready" );
+
+    $.ajax({
+      type: 'GET',
+      url: "/api/get-root-categories",
+      success: function(result) {
+        $("#product-search-container").html(result);
+      }
+});
+
+  });
+</script>
 
 <%- include('partials/footer'); -%>

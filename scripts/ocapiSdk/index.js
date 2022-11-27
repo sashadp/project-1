@@ -3,7 +3,8 @@
 const fetch = require('cross-fetch');
 
 const {
-    getProductSearchUrl
+    getProductSearchUrl,
+    getCategoriesUrl
 } = require('./urlBuilder');
 
 /*
@@ -24,6 +25,21 @@ module.exports = {
         });
 
         return fetch(productSearchUrl, {
+                method: 'GET'
+            })
+            .then(function (res) {
+                if (res.status >= 400) {
+                    throw new Error("Bad response from server");
+                }
+                return res.json();
+            });
+    },
+    getCategories: function (levels=1) {
+        const categoriesUrl = getCategoriesUrl({
+            levels: levels,
+        });
+
+        return fetch(categoriesUrl, {
                 method: 'GET'
             })
             .then(function (res) {
