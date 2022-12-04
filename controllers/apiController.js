@@ -4,7 +4,7 @@ const categoryBuilder = require('../scripts/modelsBuilder/categoryTileBuilder')
 
 
 const get_root_categories = (req, res) => {
-    console.log('get_root_categories run');
+    console.log('\n apiController get_root_categories run');
 
     const levels = 1;
 

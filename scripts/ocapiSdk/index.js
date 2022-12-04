@@ -18,7 +18,7 @@ module.exports = {
     getProductSearchResult: function (q='', startIndex = 0) {
         const productSearchUrl = getProductSearchUrl({
             q: q,
-            count: 25, // by default 25 products per search result
+            count: 10, // by default 25 products per search result
             refine_2: 'orderable_only', // return only orderable products
             expand: 'availability,prices,images', // expand params. if defined mentioned data will be returned
             start: startIndex // check example above

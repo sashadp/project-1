@@ -2,6 +2,7 @@
 
 <div class="container">
   <p>Welcome to <%= title %></p>
+  <p>testData=<%= testData %></p>
 </div>
 
 <div class="container">
@@ -12,8 +13,24 @@
         <div class="card">
           <div class="card-body">
             <ul>
-              <% categoryData.forEach(function(category) { %>
-                <li> category_name: <%= category.name %> [id=<%= category.id %>] [parent_id=<%= category.parent_category_id %>]</li>
+              <% categoryData.forEach(function(categoryLevel1) { %>
+                <li><strong><%= categoryLevel1.name %></strong> [id=<%= categoryLevel1.id %>] [parent_id=<%= categoryLevel1.parent_category_id %>]
+                <% if (typeof categoryLevel1.categories !== 'undefined') { %>
+                  <ul>
+                    <% categoryLevel1.categories.forEach(function(categoryLevel2) { %>
+                      <li><strong><%= categoryLevel2.name %></strong> [id=<%= categoryLevel2.id %>] [parent_id=<%= categoryLevel2.parent_category_id %>]
+                      <% if (typeof categoryLevel2.categories !== 'undefined') { %>
+                        <ul>
+                          <% categoryLevel2.categories.forEach(function(categoryLevel3) { %>
+                            <li><strong><%= categoryLevel3.name %></strong> [id=<%= categoryLevel3.id %>] [parent_id=<%= categoryLevel3.parent_category_id %>]</li>
+                          <% }); %>
+                        </ul>
+                      <% } %>
+                      </li>
+                    <% }); %>
+                  </ul>
+                <% } %>
+                </li>
               <% }); %>
             </ul>
           </div>
